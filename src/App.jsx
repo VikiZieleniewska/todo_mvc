@@ -28,7 +28,13 @@ function App() {
     }
   }
 
-  function handleDelite(event) {}
+  function handleDelite(taskToDelite) {
+    return () => {
+      const newTasks = tasks.filter((task) => task !== taskToDelite);
+
+      setTasks(newTasks);
+    };
+  }
 
   return (
     <>
@@ -43,7 +49,7 @@ function App() {
         {tasks.map((task) => (
           <li key={task.id}>
             <span>{task.name}</span>
-            <button onClick={handleDelite}>delite</button>
+            <button onClick={handleDelite(task)}>delite</button>
           </li>
         ))}
       </ul>
