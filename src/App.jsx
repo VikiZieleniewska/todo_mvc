@@ -45,6 +45,10 @@ function App() {
     };
   }
 
+  function handleDeliteDoneTasks() {
+    setTasks(tasks.filter((task) => task.status !== "done"));
+  }
+
   return (
     <>
       <h1>todos</h1>
@@ -68,6 +72,9 @@ function App() {
           </li>
         ))}
       </ul>
+      {tasks.some((task) => task.status === "done") && (
+        <button onClick={handleDeliteDoneTasks}> Clear completed</button>
+      )}
     </>
   );
 }
