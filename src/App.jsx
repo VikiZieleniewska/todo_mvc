@@ -4,6 +4,7 @@ import "./App.css";
 function App() {
   const [value, setValue] = useState("");
   const [tasks, setTasks] = useState([]);
+  const [filter, setFilter] = useState("all");
 
   function getId() {
     if (!tasks.length) return 1;
@@ -59,19 +60,28 @@ function App() {
         onKeyUp={handleAddTask}
       />
       <ul>
-        {tasks.map((task) => (
-          <li key={task.id}>
-            <button
-              onClick={handleChangeStatus(task)}
-              className={task.status === "active" ? "active" : "done"}
-            >
-              {task.status}
-            </button>
-            <span>{task.name}</span>
-            <button onClick={handleDelite(task)}>delite</button>
-          </li>
-        ))}
+        {tasks
+          .filter((task) => (filter === "all" ? true : task.status === filter))
+          .map((task) => (
+            <li key={task.id}>
+              <button
+                onClick={handleChangeStatus(task)}
+                className={task.status === "active" ? "active" : "done"}
+              >
+                {task.status}
+              </button>
+              <span>{task.name}</span>
+              <button onClick={handleDelite(task)}>delite</button>
+            </li>
+          ))}
       </ul>
+
+      <div>
+        <button onClick={() => setFilter("all")}>All</button>
+        <button onClick={() => setFilter("active")}>Active</button>
+        <button onClick={() => setFilter("done")}>Complited</button>
+      </div>
+
       {tasks.some((task) => task.status === "done") && (
         <button onClick={handleDeliteDoneTasks}> Clear completed</button>
       )}
